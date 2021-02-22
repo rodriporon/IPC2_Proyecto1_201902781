@@ -1,5 +1,6 @@
 from tqdm import tqdm
 from time import sleep
+from ProcesarArchivo import procesarArchivo
 
 def verificarNumero():
  
@@ -27,9 +28,7 @@ def cargarArchivo():
     print('Opción Cargar Archivo')
     print('Ingrese la ruta del archivo:')
     ruta = input()
-
-
-
+    return ruta
 
 def menuPrincipal():
 
@@ -53,7 +52,9 @@ def menuPrincipal():
 
         if opcion == 2:
 
+            print('Opción Procesar archivo')
             procesarArchivo()
 
         elif opcion == 6:
             salir = True
+
