@@ -1,3 +1,4 @@
+from os import lseek
 from tqdm.auto import tqdm
 from time import sleep
 from xml.dom import minidom
@@ -5,7 +6,7 @@ from nodo import Nodo
 from lista import Lista
 from matriz import Matriz
 
-from xml.etree.ElementTree import TreeBuilder, parse
+from xml.etree import ElementTree
 
 
 def verificarNumero():
@@ -25,22 +26,57 @@ def procesarArchivo():
 
     print('\n Calculando la matriz binaria..')
 
-    tree = parse(ruta)
+    with open(ruta, 'rt') as f:
+        tree = ElementTree.parse(f)
 
+
+    lista_matrices = Lista()
     nombre_matrices = Lista()
     m_matrices = Lista()
     n_matrices = Lista()
 
     for node in tree.iter('matriz'):
         nombre = node.attrib.get('nombre')
-        m = node.attrib.get('m')
-        n = node.attrib.get('n')
+        m = int(node.attrib.get('m'))
+        n = int(node.attrib.get('n'))
         nombre_matrices.add(Nodo(nombre))
         m_matrices.add(Nodo(m))
         n_matrices.add(Nodo(n))
+        
+        lista_matrices.add(Matriz(m, n, nombre))
 
-    print(nombre_matrices[0])
-            
+        for i in node:
+            print(i.text)
+        print('....')
+
+    """for i in range(lista_matrices.length()):
+        lista_matrices[i].add(n_matrices)"""
+    contador_fin_matriz = 0
+    for node in tree.iter('matriz'):
+        contador_elemento = 0
+        
+        lista = Lista()
+        for i in node:
+            y = int(node.attrib.get('m'))
+            x = int(node.attrib.get('n'))
+            if contador_elemento < y:
+                valor = int(i.text)
+                lista.add(Nodo(valor))
+                print('Lista sumando: {}'.format(lista))
+                contador_elemento += 1
+            else:
+                print('Sí llegó al else')
+                lista_matrices[contador_fin_matriz].add(lista)
+                contador_elemento = 0
+                lista = Lista()
+        contador_fin_matriz += 1
+
+    print(lista_matrices[0].get_item(0,0))
+
+    """ node = tree.find('.//dato')
+    print(node.tag) """
+
+
 
     
     
