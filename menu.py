@@ -1,6 +1,12 @@
-from tqdm import tqdm
+from tqdm.auto import tqdm
 from time import sleep
-from ProcesarArchivo import procesarArchivo
+from xml.dom import minidom
+from nodo import Nodo
+from lista import Lista
+from matriz import Matriz
+
+from xml.etree.ElementTree import TreeBuilder, parse
+
 
 def verificarNumero():
  
@@ -16,15 +22,43 @@ def verificarNumero():
     return num
 
 def procesarArchivo():
-    
-    tareas = 100
 
-    for i in tqdm(range(tareas)):
-        sleep(0.2)
+    print('\n Calculando la matriz binaria..')
+
+    tree = parse(ruta)
+
+    nombre_matrices = Lista()
+    m_matrices = Lista()
+    n_matrices = Lista()
+
+    for node in tree.iter('matriz'):
+        nombre = node.attrib.get('nombre')
+        m = node.attrib.get('m')
+        n = node.attrib.get('n')
+        nombre_matrices.add(Nodo(nombre))
+        m_matrices.add(Nodo(m))
+        n_matrices.add(Nodo(n))
+
+    print(nombre_matrices[0])
+            
+
+    
+    
+    """for i in tqdm(range(len(root))):
+        print(" ", end='\r')"""
+            
+    """for elem in root:
+        for subelem in elem:
+            print(subelem.text)"""
+
+                
+    print('\n Realizando suma de tuplas...')
+            
 
 
 def cargarArchivo():
 
+    global ruta 
     print('Opción Cargar Archivo')
     print('Ingrese la ruta del archivo:')
     ruta = input()
@@ -52,8 +86,8 @@ def menuPrincipal():
 
         if opcion == 2:
 
-            print('Opción Procesar archivo')
             procesarArchivo()
+                
 
         elif opcion == 6:
             salir = True
