@@ -39,11 +39,11 @@ def procesarArchivo():
         nombre = node.attrib.get('nombre')
         m = int(node.attrib.get('m'))
         n = int(node.attrib.get('n'))
-        nombre_matrices.add(Nodo(nombre))
-        m_matrices.add(Nodo(m))
-        n_matrices.add(Nodo(n))
+        nombre_matrices.agregar(Nodo(nombre))
+        m_matrices.agregar(Nodo(m))
+        n_matrices.agregar(Nodo(n))
         
-        lista_matrices.add(Matriz(m, n, nombre))
+        lista_matrices.agregar(Matriz(m, n, nombre))
 
         for i in node:
             print(i.text)
@@ -52,26 +52,53 @@ def procesarArchivo():
     """for i in range(lista_matrices.length()):
         lista_matrices[i].add(n_matrices)"""
     contador_fin_matriz = 0
+   
+    lista = Lista()
     for node in tree.iter('matriz'):
+        contador_y = 1
+        contador_x = 1
         contador_elemento = 0
-        
-        lista = Lista()
+        termino_fila = False
+        y = int(node.attrib.get('m'))
+        x = int(node.attrib.get('n'))
         for i in node:
-            y = int(node.attrib.get('m'))
-            x = int(node.attrib.get('n'))
-            if contador_elemento < y:
+            valor_y = int(i.attrib.get('y'))
+            valor_x = int(i.attrib.get('x'))
+            valor = int(i.text)
+
+            
+
+            """print('Los valores son {} y {}'.format(contador_y, valor_y))
+            if contador_x == x:
+                print()
+                print('Llegó al limite')
+            if contador_y == valor_y and contador_x == valor_x:
                 valor = int(i.text)
-                lista.add(Nodo(valor))
+                lista.agregar(Nodo(valor))
                 print('Lista sumando: {}'.format(lista))
-                contador_elemento += 1
-            else:
-                print('Sí llegó al else')
-                lista_matrices[contador_fin_matriz].add(lista)
-                contador_elemento = 0
+            elif contador_y == (y + 1):
+                lista_matrices[contador_fin_matriz].agregar(lista)
                 lista = Lista()
+                lista.agregar(Nodo(valor))
+                print('El valor de contador_x: {}'.format(contador_x))
+                contador_y = 1
+                contador_x += 1
+
+
+            contador_y += 1
+        contador_x = 1    
+        print('............................................ contador_x = {}'.format(contador_x))
+        contador_fin_matriz += 1"""
+        
+            lista.agregar(Nodo(valor))
+            if valor_y == y:
+                print(lista)
+                lista_matrices[contador_fin_matriz].agregar(lista)
+                lista = Lista()
+
         contador_fin_matriz += 1
 
-    print(lista_matrices[0].get_item(0,0))
+    print(lista_matrices[2].obtener_elem(4,4))
 
     """ node = tree.find('.//dato')
     print(node.tag) """
@@ -87,9 +114,19 @@ def procesarArchivo():
         for subelem in elem:
             print(subelem.text)"""
 
-                
+    print(lista_matrices)
+
     print('\n Realizando suma de tuplas...')
-            
+
+    for i in range(lista_matrices.length()):
+        for j in range(lista_matrices[i].get_m()):
+            for k in range(lista_matrices[i].get_n()):
+                if lista_matrices[i].obtener_elem(k, j) != 0:
+                    print(1)
+                else:
+                    print(0)
+
+        
 
 
 def cargarArchivo():
