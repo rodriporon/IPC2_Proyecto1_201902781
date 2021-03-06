@@ -6,6 +6,8 @@ class Lista(Nodo):
         self.cabeza = Nodo()
         self.contador = 0
         self.valor = self.__str__()
+        self.frecuencia = 1
+        self.indice_frecuencia = None
         
     def agregar(self, nuevo_nodo):
         nodo = self.cabeza
@@ -48,3 +50,23 @@ class Lista(Nodo):
             resultado += '{}, '.format(nodo.valor)
         resultado += "]"
         return resultado
+    def clonar(self):
+        nueva = Lista()
+        for i in range(self.length()):
+            valor = self.get(i).valor
+            nuevo_nodo = Nodo(valor)
+            nueva.agregar(nuevo_nodo)
+            nueva.valor = self.__str__()
+        return nueva
+    def sumar(self, lista):
+        for i in range(self.length()):
+            self.get(i).valor += lista.get(i).valor
+        self.valor = self.__str__()
+    def obtenerPatron(self):
+        listaPatron = Lista()
+        for i in range(self.length()):
+            if(self.get(i).valor > 0):
+                listaPatron.agregar(Nodo(1))
+            else:
+                listaPatron.agregar(Nodo(0))
+        return listaPatron

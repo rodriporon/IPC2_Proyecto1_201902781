@@ -17,9 +17,10 @@ class Matriz(Lista):
         celda = fila.get(x)
         return celda.valor
 
-    def get_name(self):
-        return self.nombre
-        
+    def get_name(self, nombre):
+        name = self.get(nombre)
+        return name
+
     def get_n(self):
         return self.n
 
@@ -27,5 +28,15 @@ class Matriz(Lista):
         return self.m
 
     def __str__(self):
-        resultado = '{} de tamaño {}x{}, con valor: {}'.format(self.nombre, self.m, self.n, super().__str__())
+        resultado = "["
+        for i in range(self.length()):
+            nodo = self.get(i)
+            if (i == self.length()-1):
+                resultado += '{}'.format(nodo.valor)
+                break
+            resultado += '{},\n'.format(nodo.valor)
+        resultado += "]"
         return resultado
+
+        #resultado = '{} de tamaño {}x{}, con valor: {}'.format(self.nombre, self.m, self.n, super().__str__())
+        #return resultado
