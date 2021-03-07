@@ -1,10 +1,11 @@
-from os import lseek
+import os
 from tqdm.auto import tqdm
 from time import sleep
 from xml.dom import minidom
 from nodo import Nodo
 from lista import Lista
 from matriz import Matriz
+from graphviz import Digraph
 
 from xml.etree import ElementTree
 
@@ -154,6 +155,61 @@ def buscarMatriz(buscar):
             return i
         else:
             return 'No se encontró la matriz'
+def mostrarDatos():
+
+    print('\nRodrigo Antonio Porón De León\n201902781\nIntroducción a la Programación y Computación 2 Sección "C"')
+    print('Ingeniería en Ciencias y Sistemas\n4to Semestre\n')
+
+def mostrarMatrices():
+    for i in range(lista_matrices.length()):
+        print('{}.- {}'.format(i+1, lista_matrices[i].nombre))
+    
+    matriz_seleccionada = int(input('Seleccione el No. de la matriz a graficar: ')) - 1
+    print(f'La matriz que seleccionó es: {lista_matrices[matriz_seleccionada]}')
+    #print(f'm es: {lista_matrices[matriz_seleccionada].m} y n es: {lista_matrices[matriz_seleccionada].n}')
+
+    generarGrafica(lista_matrices[matriz_seleccionada])
+
+def generarGrafica(matriz):
+    
+    """with open("grafo-salida.dot", mode="w") as f:
+        f.write("digraph Matrices{\n")
+        f.write(f"Matrices -> {matriz.nombre};\n")
+        f.write(f"{matriz.nombre} -> n;\n")
+        f.write(f"{matriz.nombre} -> m;\n")
+        f.write(f"n [label=\"n={matriz.n}\"];\n")
+        f.write(f"m [label=\"m={matriz.m}\"];\n")
+        for i in range(matriz.get_m()):
+            print(f'la dimension de la fila es: {matriz.get_m()}')
+            for j in range(matriz.get_n()):
+                if j == 0:
+                    f.write(f"{matriz.nombre} -> \"({i}, {j}): {matriz[i][j]}\";\n")
+                else:
+                    f.write(f'\"({i}, {j-1}): {matriz[i][j-1]}\" -> \"({i}, {j}): {matriz[i][j]}\";\n')
+        f.write("}")
+    os.system("dot -Tpng grafo-salida.dot -o salida.png")"""
+
+    dot = Digraph()
+    dot.node('P','Matrices')
+    dot.node('Q',matriz.nombre)
+    dot.edge('P','Q')
+    dot.node('M','m={}'.format(str(matriz.m)))
+    dot.node('N','n={}'.format(str(matriz.n)))
+    dot.edge('Q','M')
+    dot.edge('Q','N')
+
+    for i in range(matriz.length()):
+        for j in range(matriz[i].length()):
+            dot.node(f'{i},{j}', f'{matriz.obtener_elem(i,j)}')
+            if j == 0:
+                #f.write(f"{matriz.nombre} -> \"({i}, {j}): {matriz[i][j]}\";\n")
+                dot.edge('Q', f'{i},{j}')
+            else:
+                #f.write(f'\"({i}, {j-1}): {matriz[i][j-1]}\" -> \"({i}, {j}): {matriz[i][j]}\";\n')
+                dot.edge(f'{i},{j-1}',f'{i},{j}')
+    dot.render('grafo.gv', view=True)
+    print('Grafo creado')
+
 
 
 def cargarArchivo():
@@ -186,7 +242,7 @@ def escribirArchivo():
     f = open("salida.xml", "w")
     f.write(xml_parseado)
     f.close()
-    print("El xml con las matrices reducidas ha sido escrito")
+    print("El archivo xml con las matrices reducidas ha sido escrito")
 
 def menuPrincipal():
 
@@ -215,7 +271,14 @@ def menuPrincipal():
         if opcion == 3:
 
             escribirArchivo()
+
+        if opcion == 4:
+
+            mostrarDatos()
                 
+        if opcion == 5:
+
+            mostrarMatrices()
 
         elif opcion == 6:
             salir = True

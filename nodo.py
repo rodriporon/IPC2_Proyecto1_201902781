@@ -5,13 +5,14 @@ class Nodo:
         self.siguiente = siguiente 
 
     def __str__(self):
-        resultado = ""
+        resultado = str(self.valor)
+        """resultado = ""
         if (self.valor):
             resultado += str(self.valor)
         else:
-            resultado = "El nodo está vacío"
-        if(self.anterior):
+            resultado = "El nodo está vacío"""
+        """if(self.anterior):
             resultado += "\nNodo anterior con valor: {}".format(self.anterior.valor)
         if(self.siguiente):
-            resultado += "\nNodo siguiente con valor: {}".format(self.siguiente.valor)
+            resultado += "\nNodo siguiente con valor: {}".format(self.siguiente.valor)"""
         return resultado
