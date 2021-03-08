@@ -1,3 +1,4 @@
 tqdm==4.57.0
 virtualenv==20.0.35
 virtualenv-clone==0.5.4
+graphviz==0.16

@@ -1,12 +1,9 @@
 import os
-from tqdm.auto import tqdm
-from time import sleep
 from xml.dom import minidom
 from nodo import Nodo
 from lista import Lista
 from matriz import Matriz
 from graphviz import Digraph
-
 from xml.etree import ElementTree
 
 
@@ -48,13 +45,6 @@ def procesarArchivo():
         
         lista_matrices_binarias.agregar(Matriz(m,n,nombre))
         lista_matrices.agregar(Matriz(m, n, nombre))
-
-        #for i in node:
-            #print(i.text)
-        #print('....')
-
-    """for i in range(lista_matrices.length()):
-        lista_matrices[i].add(n_matrices)"""
     contador_fin_matriz = 0
    
     lista = Lista()
@@ -70,29 +60,6 @@ def procesarArchivo():
             valor_x = int(i.attrib.get('x'))
             valor = int(i.text)
 
-            
-
-            """print('Los valores son {} y {}'.format(contador_y, valor_y))
-            if contador_x == x:
-                print()
-                print('Llegó al limite')
-            if contador_y == valor_y and contador_x == valor_x:
-                valor = int(i.text)
-                lista.agregar(Nodo(valor))
-                print('Lista sumando: {}'.format(lista))
-            elif contador_y == (y + 1):
-                lista_matrices[contador_fin_matriz].agregar(lista)
-                lista = Lista()
-                lista.agregar(Nodo(valor))
-                print('El valor de contador_x: {}'.format(contador_x))
-                contador_y = 1
-                contador_x += 1
-
-
-            contador_y += 1
-        contador_x = 1    
-        print('............................................ contador_x = {}'.format(contador_x))
-        contador_fin_matriz += 1"""
         
             lista.agregar(Nodo(valor))
             if valor_y == y:
@@ -104,14 +71,6 @@ def procesarArchivo():
 
     #print(lista_matrices[2].obtener_elem(4,4))
 
-    
-    
-    """for i in tqdm(range(len(root))):
-        print(" ", end='\r')"""
-            
-    """for elem in root:
-        for subelem in elem:
-            print(subelem.text)"""
 
     #print(lista_matrices)
 
@@ -220,6 +179,7 @@ def cargarArchivo():
     return ruta
 
 def escribirArchivo():
+    ruta_salida = input('Escribir una ruta específica:')
     et_raiz = ElementTree.Element("matrices")
     for i in range(lista_matrices_reducidas.length()):
         matriz_reducida = lista_matrices_reducidas.get(i)
@@ -239,7 +199,7 @@ def escribirArchivo():
             et_frecuencia.text = str(fila_reducida.frecuencia)
     xml_matrices = ElementTree.tostring(et_raiz, 'utf-8')
     xml_parseado = minidom.parseString(xml_matrices).toprettyxml(indent="\t")
-    f = open("salida.xml", "w")
+    f = open(ruta_salida, "w")
     f.write(xml_parseado)
     f.close()
     print("El archivo xml con las matrices reducidas ha sido escrito")
