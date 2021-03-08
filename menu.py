@@ -69,11 +69,6 @@ def procesarArchivo():
 
         contador_fin_matriz += 1
 
-    #print(lista_matrices[2].obtener_elem(4,4))
-
-
-    #print(lista_matrices)
-
     print('\n Realizando suma de tuplas...')
 
     #print(f"La lista de matrices que vienen en el xml tiene longitud: {lista_matrices.length()}")
@@ -124,7 +119,7 @@ def mostrarMatrices():
         print('{}.- {}'.format(i+1, lista_matrices[i].nombre))
     
     matriz_seleccionada = int(input('Seleccione el No. de la matriz a graficar: ')) - 1
-    print(f'La matriz que seleccionó es: {lista_matrices[matriz_seleccionada]}')
+    #print(f'La matriz que seleccionó es: {lista_matrices[matriz_seleccionada]}')
     #print(f'm es: {lista_matrices[matriz_seleccionada].m} y n es: {lista_matrices[matriz_seleccionada].n}')
 
     generarGrafica(lista_matrices[matriz_seleccionada])
